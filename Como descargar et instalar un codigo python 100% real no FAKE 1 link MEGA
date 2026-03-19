@@ -1,0 +1,17 @@
+Algo des villes est un algo NP-Complet cad que le temps pour trouver la bonne solution croit de manière exponentielle au fur et à mesur qu'on rajoute des villes EX: pour 5 villes il ya 12 itinéraires pour 15 il y a 43 miilliards d'itinéraires💀 Donc on doit appliquer une méthode d'heuristique cad une méthode qui se rapproche le plus possible à la bonne résolution donc on utilisera l'algo genetique qui nous permetrra de trouver une bonne solution en peu de temps
+
+Algo génétique=Algo qui simule la selection naturelle où : Un gène = point de passage Un indiv = Itinéraire complet EX de A à D on peut avoir \[A,B,C,D\] La population = ensemble d'individus (itinéraires) La fitness = force de l'individu plus les itinéraires sont courts plus haute serà la fitness dans ce cas on a que : Fitness = 1/Distnace Totale
+
+Las 5 etapas del duelo: 1.Création de la population initial On génére des itinéraires aléatoires 2.Objectif du code dans ce cas fitness = 1/Distance Totale 3.Création des nouveaux individus A. La selection (torneo del poder) = On fait une compétition entre un petit groupe d'individus et  on voit qui a la fitness  la plus haute, celui ci deviendra le P1, on le  refait =\> le P2 est le 1er de son propre groupe =\> ON PRENDS PAS LES 2 MEILLEURS ABSOLUS JUSTE CEUX DU GROUPE B.Le crossover = On prend une partie du P1 et on le colle tel quel dans l'enfant, puis on voit P2; si P2 a la meme zone on l'ignore quand P2 a une zone différente de l'enfant on le met dans la premiere case possible du nouveau trajet EX: P1 = A,B,C,D P2: A,F,G,T E1= A,--,--,--,D =\> E1=A,F,G,D C. La mutation = On lance un dé où on a une très petite chance de qu'il y au une mutation =\> Si ça tombe sur cette cette pettie chance alors mutaition bien random en inversant 2 zones de l'itinéraire de l'enfant EX: A,B,C,D =\> D,B,C,A 4.Ajout de la population Les enfants remplacent leurs parents 5.Retour à l'étape 2 On fait une boucle
+
+```
+        ETAPAS MORTALES DEL CODIGO
+```
+
+Definir les villes : Nom Lieu Coord x Coord y
+
+Definir la distance entre 2 villes
+
+Constiués de plusiers villes avec leurs distance crear una boucle for con inicio la villeA y como final la villeB y desde la villeA busca la ciudad mas cerca en ciudad la mas cercana a B Definir itinériare una collecion aleatoria de ciudades que no se repite y que viene con las distancias ITINERRIO \[ciudad & - cuidad 2, 200km) SELECCION : coge alestoire
+
+Etapa 1 : una lista que contiene todos los planetas en un orden y sin repeteciones, la lista tiene las distancias si no se puede poner la distancia se crea 1 vector 3D donde habria x,y, y Fitnesss y los valores se asocian al itinerario correspondiente
