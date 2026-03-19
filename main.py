@@ -11,7 +11,8 @@ canvas = tkr.Canvas(root, width=900, height=700, bg= "#2F1939")
 canvas.pack()
 canvas_resize = graphics.CanvasResize(canvas)
 
-galaxie = classes.Ititneraire.SamsungGalaxy(None,10)# ! esto es para obtener solo la lista de planetas, falta testearlo
+#
+#  galaxie = classes.Ititneraire.SamsungGalaxy(None,10)# ! esto es para obtener solo la lista de planetas, falta testearlo
 
 sprites = []
 for i in galaxie:
