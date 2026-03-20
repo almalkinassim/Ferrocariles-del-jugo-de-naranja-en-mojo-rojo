@@ -10,7 +10,6 @@ canvas = tkr.Canvas(root, width=1024, height=786, bg= "#2F1939")
 #buscar funcion pack
 canvas.pack()
 #canvas_resize = graphics.CanvasResize(canvas)
-
 galaxie = classes.Galaxia() # ! esto es para iniciar la galaxia 
 galaxie.SamsungGalaxy(20) # esto es para generar los planetas
 
@@ -20,16 +19,31 @@ for i in galaxie.listPlnt:
     print(i)
 
 #test avec tous, mais on peut faire tourner avec top 5 fitness ou similaire
-n = 10
+n=10
 ittest = classes.Itinerarios(galaxie)# que es ittest? te refieres a fittest?
 ittest.genererRd(n)
 routes = []
+
 for i in range(n):
     route_lines = graphics.GalaxyPath(canvas, ittest.itinerarios[i])
     routes.append(route_lines)
-    # ! dist volvio a explotar 
-    print(ittest.Dist()) #XDDD Dios sabe porque  cuando lo activo me dice que NovoPlanete no es un attributo y no me deja debuggear
+    
+    
+fitness_list = []
+
+for i in ittest.itinerarios:
+    d = ittest.Dist(i)
+    f = 1 / d
+    fitness_list.append((i, f))
+
+for chemin, fitness in fitness_list:
+    print("Chemin :", chemin)
+    print("Fitness :", fitness)
+    print("Distance :",ittest.Dist(i) )
+    print("--------------")
+
 
 #graphics.GalaxyPath(canvas, galaxie) 
+
 
 root.mainloop()

@@ -1,3 +1,16 @@
+                        COMO HACER QUE LOS PLANETAS NO SE SUPERPONGAN
+                en galaxia(probablemente) podremos analizar las coordenadas que ya han sido atribuuidas a un planeta
+                creamos una lista que almacena las coordenadas separadas en x e y
+                Pseudo codigo
+                If(coordenadas.!contains coordx && coordenadas!contains coordy)
+                        añade las coordenadas a al planeta en cuestion
+                else:
+                        vuelve a generar coordenadas                        
+
+
+
+
+
 Algo des villes est un algo NP-Complet cad que le temps pour trouver la bonne solution croit de manière exponentielle au fur et à mesur qu'on rajoute des villes EX: pour 5 villes il ya 12 itinéraires pour 15 il y a 43 miilliards d'itinéraires💀 Donc on doit appliquer une méthode d'heuristique cad une méthode qui se rapproche le plus possible à la bonne résolution donc on utilisera l'algo genetique qui nous permetrra de trouver une bonne solution en peu de temps
 
 Algo génétique=Algo qui simule la selection naturelle où : Un gène = point de passage Un indiv = Itinéraire complet EX de A à D on peut avoir \[A,B,C,D\] La population = ensemble d'individus (itinéraires) La fitness = force de l'individu plus les itinéraires sont courts plus haute serà la fitness dans ce cas on a que : Fitness = 1/Distnace Totale
@@ -15,3 +28,4 @@ Definir la distance entre 2 villes
 Constiués de plusiers villes avec leurs distance crear una boucle for con inicio la villeA y como final la villeB y desde la villeA busca la ciudad mas cerca en ciudad la mas cercana a B Definir itinériare una collecion aleatoria de ciudades que no se repite y que viene con las distancias ITINERRIO \[ciudad & - cuidad 2, 200km) SELECCION : coge alestoire
 
 Etapa 1 : una lista que contiene todos los planetas en un orden y sin repeteciones, la lista tiene las distancias si no se puede poner la distancia se crea 1 vector 3D donde habria x,y, y Fitnesss y los valores se asocian al itinerario correspondiente
+

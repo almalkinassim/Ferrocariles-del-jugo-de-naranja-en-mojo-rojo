@@ -26,36 +26,35 @@ class Galaxia: #GENERA LOS PLANETAS UNICAMENTE
 
     def __init__(self):# Nassem: porque no lo pusistes en argulento a listPlnt?
         self.listPlnt: list[Planete] = []
-        self.nombreCoplt : str
-        self.coordx : int
-        self.coordy : int
-        self.NovoPlanete : Planete 
+        self.NovoPlanete : Planete # hay que definir esto como un atributop como Planeta 
 
       #experimento a ver si funciona normalmente deberia de   de generarme unos 10 inidviduos
     def SamsungGalaxy(self,n: int):
-        
+        ListCoordx = []
+        ListCoordy = []
         for i in range (1,n):
+  
         
-            rdint = rd.randint
-            brandom = rdint(1,50) # dans le file Json on a 50 int avec chacun nom1 et nom2
-            
+            #GENERACION ALEATORIA DE LOS NOMBRES
             nombre1 = rd.choice(listNmbr)
             nombre2 = rd.choice(listNmbr)
-             # on choisit un nom au hasard dans le file Json avec son id
             n1 = nombre1["nom1"]
             n2 = nombre2["nom2"]
             nombreCoplt = f"{n1} {n2}"
             
+            #GENERACION ALEATORIA DE LAS COORDENADAS
+            rdint = rd.randint
             coordx = rdint(1,28)*32 # la taille de la ventana y 32 porque los planetas son de 32 pixels
             coordy = rdint(1,21)*32
             
-            NovoPlanete = Planete(nombreCoplt,coordx, coordy)
             
-            self.listPlnt.append(NovoPlanete)
-            CoordCurrentPlant = [coordx,coordy]
-            PlantAntig = self.listPlnt [self.listPlnt.index(NovoPlanete)-1] # ! esto es para obtener el planeta anterior al nuevo planeta, pero no se si es la mejor forma de hacerlo
+            if(coordx not in ListCoordx and coordy not in ListCoordy):# para evitar super posiciones
+                self.NovoPlanete = Planete(nombreCoplt, coordx, coordy)
+                self.listPlnt.append(self.NovoPlanete)
+            #Python funciona leyendo linea por line es decir PRIMERO verficamos que las coordenadas no estan en la lista y LUEGOQ se pone en la lista
+            ListCoordx.append(coordx)
+            ListCoordy.append(coordy)
             
-
         return self.listPlnt 
     
     
@@ -67,13 +66,11 @@ class Itinerarios():
 
         self.itinerarios = []
 
-
-
-    def mutation(self, p: int): # aqui los self.Galx.listPlnt[i] me dan errores del estilo No overloads for "__setitem__" match the provided arguments pero aun asi fucniona en main
-        for i in self.Galx.listPlnt:
-            if(rd.randint(0,100)<= p*100):#porque p*100 y cuando defines p, no veo que le hallas dado algun valor
-                j = self.Galx.listPlnt[rd.randint(0, len(self.Galx.listPlnt)-1)]
-                self.Galx.listPlnt[i], self.Galx.listPlnt[j] = self.Galx.listPlnt[j], self.Galx.listPlnt[i] # ! esto es para mezclar la lista de planetas, pero no se si es la mejor forma de hacerlo
+   #def mutation(self, p: int): # aqui los self.Galx.listPlnt[i] me dan errores del estilo No overloads for "__setitem__" match the provided arguments pero aun asi fucniona en main
+    #    for i in self.Galx.listPlnt:
+     #       if(rd.randint(0,100)<= p*100):#porque p*100 y cuando defines p, no veo que le hallas dado algun valor
+      #          j = self.Galx.listPlnt[rd.randint(0, len(self.Galx.listPlnt)-1)]
+       #         self.Galx.listPlnt[i], self.Galx.listPlnt[j] = self.Galx.listPlnt[j], self.Galx.listPlnt[i] # ! esto es para mezclar la lista de planetas, pero no se si es la mejor forma de hacerlo
     
     #MODIFS - PARA QUE SEA COMO EL PROBLEMA: EL PRIMER PLANETA ES EL MISMO PARA TODOS LOS ITINERARIOS, ASI QUE NO SE MEZCLA EL PRIMER PLANETA
     #generation aleatoire de m itineraires
@@ -91,13 +88,15 @@ class Itinerarios():
             self.mutation(p)
             self.itinerarios.append(shuflPlnt)
 
-    def Dist(self):# me da error me dice que NovoPlanete est un attributo desconocido pero si enciendo main no da errores
-       if(self.Galx.listPlnt.index(self.Galx.NovoPlanete) > 0): #el primer index es 0 asi que  decimos que calcule las distancias solo cuandi haya mas de 1 planeta
-            for i in range(len(self.Galx.listPlnt) - 1):# va parcorrir todo la lista y va coger el x y el y del primer planeta y del siguiente
-                p1 = self.Galx.listPlnt[i]#guarda el primero
-                p2 = self.Galx.listPlnt[i + 1]#
+    def Dist(self, chemin):# me da error me dice que NovoPlanete est un attributo desconocido pero si enciendo main no da errores
+        #el primer index es 0 asi que  decimos que calcule las distancias solo cuandi haya mas de 1 planeta
+            for i in range(len(chemin)-1):# va parcorrir todo la lista y va coger el x y el y del primer planeta y del siguiente
+                p1 = chemin[i]#guarda el primero
+                p2 = chemin[i + 1]
                 dist = math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2) # ! esto es la formula de la distancia entre dos puntos en un plano cartesiano
                 self.distTot += dist
             return self.distTot
         
-#population es redundante con itinerios : eliminada 
+
+        
+#population es redundante con itinerios : eliminada ok
