@@ -1,3 +1,4 @@
+import random
 import tkinter 
 from PIL import Image, ImageTk 
 
@@ -22,7 +23,8 @@ class CanvasResize:
     self.canvas.config(width=event.width, height=event.height)
 
 def GalaxyPath(canvas,galaxy):
+  col = random.randint(0,0x100000)
   for i in range(len(galaxy) - 1):
       p1 = galaxy[i]
       p2 = galaxy[i + 1]
-      canvas.create_line(p1.x, p1.y, p2.x, p2.y, fill="white", width=2)
+      canvas.create_line(p1.x, p1.y, p2.x, p2.y, fill=f"#{col:06x}", width=2) # invalid color name "#1001109" - fix: col:06x pour que col soit toujours un nombre de 6 chiffres en hexadécimal
