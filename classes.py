@@ -1,8 +1,9 @@
 import random as rd
 import math
-import copy
+import copy as cp
 import json
 import matplotlib
+
 
 with open("nombres.json","r") as nom:
     listNmbr = json.load(nom)
@@ -24,37 +25,40 @@ class Planete:
         
 class Galaxia: #GENERA LOS PLANETAS UNICAMENTE 
 
-    def __init__(self):# Nassem: porque no lo pusistes en argulento a listPlnt?
+    def __init__(self):
         self.listPlnt: list[Planete] = []
         self.NovoPlanete : Planete # hay que definir esto como un atributop como Planeta 
+        self.nombreCoplt : str
+        self.coordx : int
+        self.coordy : int
 
       #experimento a ver si funciona normalmente deberia de   de generarme unos 10 inidviduos
     def SamsungGalaxy(self,n: int):
         ListCoordx = []
         ListCoordy = []
-        for i in range (1,n):
-  
-        
+        for i in range(n):
             #GENERACION ALEATORIA DE LOS NOMBRES
             nombre1 = rd.choice(listNmbr)
             nombre2 = rd.choice(listNmbr)
             n1 = nombre1["nom1"]
             n2 = nombre2["nom2"]
-            nombreCoplt = f"{n1} {n2}"
+            self.nombreCoplt = f"{n1} {n2}"
             
             #GENERACION ALEATORIA DE LAS COORDENADAS
             rdint = rd.randint
-            coordx = rdint(1,28)*32 # la taille de la ventana y 32 porque los planetas son de 32 pixels
-            coordy = rdint(1,21)*32
+            self.coordx = rdint(1,28)*32 # la taille de la ventana y 32 porque los planetas son de 32 pixels
+            self.coordy = rdint(1,21)*32
             
-            
-            if(coordx not in ListCoordx and coordy not in ListCoordy):# para evitar super posiciones
-                self.NovoPlanete = Planete(nombreCoplt, coordx, coordy)
-                self.listPlnt.append(self.NovoPlanete)
+            while(self.coordx in ListCoordx and   self.coordy in ListCoordy):# tiene que ser un while 
+                self.coordx = rdint(1,28)*32 # mientras las coordenadas esten en la lista entoces dame otras
+                self.coordy = rdint(1,21)*32
+            self.NovoPlanete = Planete(self.nombreCoplt, self.coordx, self.coordy)
+            self.listPlnt.append(self.NovoPlanete)
+                
             #Python funciona leyendo linea por line es decir PRIMERO verficamos que las coordenadas no estan en la lista y LUEGOQ se pone en la lista
-            ListCoordx.append(coordx)
-            ListCoordy.append(coordy)
-            
+            ListCoordx.append(self.coordx)
+            ListCoordy.append(self.coordy)
+        self.listPlnt.append(self.listPlnt[0]) 
         return self.listPlnt 
     
     
@@ -76,27 +80,37 @@ class Itinerarios():
     #generation aleatoire de m itineraires
     def genererRd(self, m: int):
         for i in range(m):
-            # ! explicar para que esta copy | Bruh lo usastes y no sabias que era
-            shuflPlnt = self.Galx.listPlnt.copy() #yo puse copy en las librerias porque lo qu hace es hacer una copia de las galxias y asi las poemos modificar sin problemas 
+            shuflPlnt = self.Galx.listPlnt.copy() 
             rd.shuffle(shuflPlnt)
             self.itinerarios.append(shuflPlnt)
 
     #generation de m itineraires a partir de itinerarios existentes
-    def genererHerit(self, i:int, m: int, p: int):
+    def genererHerit(self, m: int, p: int):
         for i in range(m):
             shuflPlnt = self.itinerarios[i]
-            self.mutation(p)
+            #self.mutation(p)
             self.itinerarios.append(shuflPlnt)
 
-    def Dist(self, chemin):# me da error me dice que NovoPlanete est un attributo desconocido pero si enciendo main no da errores
-        #el primer index es 0 asi que  decimos que calcule las distancias solo cuandi haya mas de 1 planeta
+    def Dist(self, chemin):
+        if(len(chemin)>0):#el primer index es 0 asi que  decimos que calcule las distancias solo cuandi haya mas de 1 planeta
             for i in range(len(chemin)-1):# va parcorrir todo la lista y va coger el x y el y del primer planeta y del siguiente
                 p1 = chemin[i]#guarda el primero
                 p2 = chemin[i + 1]
-                dist = math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2) # ! esto es la formula de la distancia entre dos puntos en un plano cartesiano
+                dist = math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2) # formula de la distancia entre dos puntos en un plano cartesiano
                 self.distTot += dist
             return self.distTot
-        
-
-        
-#population es redundante con itinerios : eliminada ok
+    
+    def nouvellegen(self, m: int, p: int):
+        prevgen = cp.copy(self)
+        #modificar para que esten tambien en order creciente
+        #creo que no es con prevgen, despues testeo
+        # m se puede remplazar por el tamano de la poblacion tambien
+        h = 1
+        n = 2
+        while(h > 0):
+            h = round(m/n**2)
+            prevgen.genererHerit(h, p)
+            n += 1
+        #que el resto de los itinerarios sean aleatorios (como los "faibles" del torneo de akshay)
+        for i in range(m - h): #no es h, si no un contador de cuanos itinerarios se han generado con la herencia, porque h es el numero de itinerarios generados en la ultima iteracion del while, pero antes se han generado otros h itinerarios, entonces el numero de itinerarios faltan para llegar a m 
+            prevgen.genererRd(1) #porque 1?
